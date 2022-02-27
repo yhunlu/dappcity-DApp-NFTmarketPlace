@@ -19,13 +19,13 @@ const NavbarItem = ({ title, classProps }) => {
     <li className={`mx-10 cursor-pointer ${classProps}`}>
       <Link
         href={
-          title === 'Home'
+          (title === 'Home')
             ? '/'
-            : title === 'Sell Digital Asset'
+            : (title === 'Sell Digital Asset')
             ? '/create-item'
-            : title === 'My Digital Assets'
+            : (title === 'My Digital Assets')
             ? '/my-assets'
-            : title === 'Creator Dashboard'
+            : (title === 'Creator Dashboard')
             ? '/creator-dashboard'
             : '/404'
         }
@@ -43,7 +43,6 @@ const Navbar = () => {
     <nav className="w-full flex md:justify-center justify-between items-center p-4">
       <div className="md:flex-[0.5] flex-initial justify-center items-center text-purple-500 text-lg mr-40">
         <Link href="/" passHref>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <Image src={logo} alt="logo" className="w-32 cursor-pointer" />
         </Link>
       </div>
