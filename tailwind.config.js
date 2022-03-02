@@ -26,6 +26,7 @@ module.exports = {
       },
       backgroundColor: {
         mainColor: '#7700b3',
+        secondaryColor: '#4a008f1c'
       },
     },
   },
