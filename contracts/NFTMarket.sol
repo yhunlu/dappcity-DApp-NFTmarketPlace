@@ -39,6 +39,12 @@ contract NFTMarket is ReentrancyGuard {
         bool sold
     );
 
+    /* Updates the listing price of the contract */
+    function updateListingPrice(uint _listingPrice) public payable {
+      require(owner == msg.sender, "Only marketplace owner can update listing price.");
+      listingPrice = _listingPrice;
+    }
+
     // returns the listing price of the contract
     function getListingPrice() public view returns (uint256) {
         return listingPrice;
@@ -122,7 +128,51 @@ contract NFTMarket is ReentrancyGuard {
         return items;
     }
 
-    // returns only 1 items that a user has purchased
+    // Returns only items that a user has purchased
+    function fetchMyNFTs() public view returns (MarketItem[] memory) {
+        uint256 totalItemCount = _itemIds.current();
+        uint256 itemCount = 0;
+        uint256 currentIndex = 0;
 
-    // returns only items a user has created
+        for (uint256 i = 0; i < totalItemCount; i++) {
+            if (idToMarketItem[i + 1].owner == msg.sender) {
+                itemCount += 1;
+            }
+        }
+
+        MarketItem[] memory items = new MarketItem[](itemCount);
+        for (uint256 i = 0; i < totalItemCount; i++) {
+            if (idToMarketItem[i + 1].owner == msg.sender) {
+                uint256 currentId = i + 1;
+                MarketItem storage currentItem = idToMarketItem[currentId];
+                items[currentIndex] = currentItem;
+                currentIndex += 1;
+            }
+        }
+        return items;
+    }
+
+    // Returns only items a user has listed
+    function fetchItemsListed() public view returns (MarketItem[] memory) {
+        uint256 totalItemCount = _itemIds.current();
+        uint256 itemCount = 0;
+        uint256 currentIndex = 0;
+
+        for (uint256 i = 0; i < totalItemCount; i++) {
+            if (idToMarketItem[i + 1].seller == msg.sender) {
+                itemCount += 1;
+            }
+        }
+
+        MarketItem[] memory items = new MarketItem[](itemCount);
+        for (uint256 i = 0; i < totalItemCount; i++) {
+            if (idToMarketItem[i + 1].seller == msg.sender) {
+                uint256 currentId = i + 1;
+                MarketItem storage currentItem = idToMarketItem[currentId];
+                items[currentIndex] = currentItem;
+                currentIndex += 1;
+            }
+        }
+        return items;
+    }
 }
