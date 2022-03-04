@@ -15,7 +15,9 @@ const Home = () => {
 
   async function loadNFTs() {
     try {
-      const provider = new ethers.providers.JsonRpcProvider();
+      const provider = new ethers.providers.JsonRpcProvider(
+        'https://rpc-mumbai.maticvigil.com/'
+      );
       const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider);
       const marketContract = new ethers.Contract(
         nftmarketaddress,
@@ -23,7 +25,7 @@ const Home = () => {
         provider
       );
       const data = await marketContract.fetchMarketItems();
-  
+
       const items = await Promise.all(
         data.map(async (i) => {
           const tokenUri = await tokenContract.tokenURI(i.tokenId);
@@ -53,12 +55,16 @@ const Home = () => {
       const web3modal = new Web3Modal();
       const connection = await web3modal.connect();
       const provider = new ethers.providers.Web3Provider(connection);
-  
+
       const signer = provider.getSigner();
-      const contract = new ethers.Contract(nftmarketaddress, Market.abi, signer);
-  
+      const contract = new ethers.Contract(
+        nftmarketaddress,
+        Market.abi,
+        signer
+      );
+
       const price = ethers.utils.parseUnits(nft.price.toString(), 'ether');
-  
+
       const transaction = await contract.createMarketSale(
         nftaddress,
         nft.tokenId,
@@ -66,10 +72,10 @@ const Home = () => {
           value: price,
         }
       );
-  
+
       await transaction.wait();
-      toast.info("You have successfully purchased this item.");
       loadNFTs();
+      // toast.info('You have successfully purchased this item.');
     } catch (error) {
       toast.error(error.message);
     }
