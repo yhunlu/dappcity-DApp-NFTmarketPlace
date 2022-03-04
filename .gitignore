@@ -43,3 +43,6 @@ typechain
 #Hardhat files
 cache
 artifacts
+
+#infura
+infuraConfig.js

@@ -4,6 +4,7 @@ import Web3Modal from 'web3modal';
 import axios from 'axios';
 import { nftaddress, nftmarketaddress } from '../config';
 import { useRouter } from 'next/router';
+import { toast } from "react-toastify";
 
 import NFT from '../artifacts/contracts/NFT.sol/NFT.json';
 import Market from '../artifacts/contracts/NFTMarket.sol/NFTMarket.json';
@@ -18,36 +19,46 @@ const Myassets = () => {
   }, []);
 
   async function loadNFTs() {
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
-    const signer = provider.getSigner();
+    try {
+      const web3Modal = new Web3Modal();
+      const connection = await web3Modal.connect();
+      const provider = new ethers.providers.Web3Provider(connection);
+      const signer = provider.getSigner();
+  
+      const marketContract = new ethers.Contract(
+        nftmarketaddress,
+        Market.abi,
+        signer
+      );
+      const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider);
+      const data = await marketContract.fetchMyNFTs();
+  
+      const items = await Promise.all(
+        data.map(async (i) => {
+          const tokenUri = await tokenContract.tokenURI(i.tokenId);
+          const meta = await axios.get(tokenUri);
+          let price = ethers.utils.formatUnits(i.price.toString(), 'ether');
+          let item = {
+            price,
+            tokenId: i.tokenId.toNumber(),
+            seller: i.seller,
+            owner: i.owner,
+            image: meta.data.image,
+          };
+          return item;
+        })
+      );
+      setNfts(items);
+      setLoadingState('loaded');     
+    } catch (error) {
+      toast.error(error.message);  
+    }
 
-    const marketContract = new ethers.Contract(
-      nftmarketaddress,
-      Market.abi,
-      signer
-    );
-    const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider);
-    const data = await marketContract.fetchMyNFTs();
+  }
 
-    const items = await Promise.all(
-      data.map(async (i) => {
-        const tokenUri = await tokenContract.tokenURI(i.tokenId);
-        const meta = await axios.get(tokenUri);
-        let price = ethers.utils.formatUnits(i.price.toString(), 'ether');
-        let item = {
-          price,
-          tokenId: i.tokenId.toNumber(),
-          seller: i.seller,
-          owner: i.owner,
-          image: meta.data.image,
-        };
-        return item;
-      })
-    );
-    setNfts(items);
-    setLoadingState('loaded');
+  function listNFT(nft) {
+    console.log('nft:', nft)
+    router.push(`/resell-assets?id=${nft.tokenId}&tokenURI=${nft.tokenURI}`)
   }
 
   if (loadingState === 'loaded' && !nfts.length)
@@ -60,7 +71,7 @@ const Myassets = () => {
           {nfts.map((nft, i) => (
             <div
               key={i}
-              className="border shadow-2xl rounded-xl overflow-hidden"
+              className="border shadow-2xl rounded-xl overflow-hidden my-auto"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -72,6 +83,7 @@ const Myassets = () => {
                 <p className="text-2xl font-bold text-purple-900 text-center">
                   You own it. Price was <strong className="text-purple-500">{nft.price} Matic</strong>
                 </p>
+                {/* <button className="mt-4 w-full bg-pink-500 text-white font-bold py-2 px-12 rounded" onClick={() => listNFT(nft)}>Re-sell</button> */}
               </div>
             </div>
           ))}
