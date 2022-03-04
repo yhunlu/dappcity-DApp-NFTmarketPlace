@@ -46,7 +46,7 @@ const Navbar = () => {
           <Image src={logo} alt="logo" className="w-32 cursor-pointer" />
         </Link>
       </div>
-      <ul className="text-purple-500 md:flex hidden list-none flex-row justify-between items-center flex-initial">
+      <ul className="text-purple-500 md:flex hidden list-none flex-row justify-between items-center flex-initial font-bold">
         {navtitles.map((item, index) => (
           <NavbarItem key={item + index} title={item} />
         ))}
@@ -74,7 +74,7 @@ const Navbar = () => {
               <NavbarItem
                 key={item + index}
                 title={item}
-                classProps="my-2 text-lg"
+                classProps="my-2 text-lg font-bold"
               />
             ))}
           </ul>

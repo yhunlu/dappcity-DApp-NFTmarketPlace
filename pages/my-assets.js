@@ -7,7 +7,6 @@ import { useRouter } from 'next/router';
 
 import NFT from '../artifacts/contracts/NFT.sol/NFT.json';
 import Market from '../artifacts/contracts/NFTMarket.sol/NFTMarket.json';
-import Image from 'next/image';
 
 const Myassets = () => {
   const [nfts, setNfts] = useState([]);
@@ -55,13 +54,13 @@ const Myassets = () => {
     return <h1 className="px-20 py-10 text-3xl">No assets owned.</h1>;
 
   return (
-    <div className="flex justify-center">
+    <div className="justify-center">
       <div className="p-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
           {nfts.map((nft, i) => (
             <div
               key={i}
-              className="border shadow rounded-xl overflow-hidden"
+              className="border shadow-2xl rounded-xl overflow-hidden"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img

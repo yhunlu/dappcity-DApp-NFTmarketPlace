@@ -84,7 +84,7 @@ const Home = () => {
         <div className="p-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
             {nfts.map((nft, i) => (
-              <div key={i} className="my-auto border shadow rounded-xl overflow-hidden">
+              <div key={i} className="my-auto border shadow-2xl rounded-xl overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img className="rounded mx-auto my-auto" src={nft.image} alt={nft.title} />
                 <div className="p-4">
