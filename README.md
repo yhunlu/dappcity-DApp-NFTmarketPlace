@@ -6,7 +6,7 @@ Nextjs is a React framework that enables fast and easy web development with feat
 
 #### APPLICATION VIDEO
 
-[![NFT MarketPlace](https://img.youtube.com/vi/trKvYA3ttuM/0.jpg)](https://www.youtube.com/watch?v=trKvYA3ttuM)
+[![NFT MarketPlace](https://img.youtube.com/vi/trKvYA3ttuM/2.jpg)](https://www.youtube.com/watch?v=trKvYA3ttuM)
 
 
 The NFT market place application using these technologies would typically consist of the following components:
