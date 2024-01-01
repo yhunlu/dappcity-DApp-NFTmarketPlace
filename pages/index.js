@@ -92,6 +92,7 @@ const Home = () => {
     <div>
       <Head className="container mx-auto px-10 mb-8">
         <title>DappCity MarketPlace</title>
+        <meta name="description" content="NFT Market Place" />
         <link rel="icon" href="/logo-tab.png" />
       </Head>
       <div className="flex justify-center">
