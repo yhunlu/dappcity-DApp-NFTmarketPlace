@@ -4,9 +4,9 @@ A full-stack fully responsive modern NFT market place application using nextjs, 
 
 Nextjs is a React framework that enables fast and easy web development with features such as server-side rendering, static site generation, and API routes. Tailwindcss is a utility-first CSS framework that allows developers to style their web pages with minimal custom CSS. Solidity is a programming language for writing smart contracts that run on the Ethereum Virtual Machine (EVM). Polygon is a scaling solution for Ethereum that provides faster and cheaper transactions using a network of side chains.
 
-#### APPLICATION VIDEO
+**Check out this video:**
 
-[![NFT MarketPlace](https://img.youtube.com/vi/trKvYA3ttuM/2.jpg)](https://www.youtube.com/watch?v=trKvYA3ttuM)
+[![NFT MarketPlace](https://img.youtube.com/vi/trKvYA3ttuM/0.jpg)](https://www.youtube.com/watch?v=trKvYA3ttuM)
 
 
 The NFT market place application using these technologies would typically consist of the following components:
